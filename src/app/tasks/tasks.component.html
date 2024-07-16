@@ -1,0 +1,42 @@
+<div class="task-container">
+    <h2>Task Manager</h2>
+    <form (ngSubmit)="addTask()" #taskForm="ngForm">
+      <input type="text" placeholder="Title" [(ngModel)]="newTask.title" name="title" required>
+      <textarea placeholder="Description" [(ngModel)]="newTask.description" name="description" required></textarea>
+      <input type="date" [(ngModel)]="newTask.dueDate" name="dueDate" required>
+      <select [(ngModel)]="newTask.priority" name="priority" required>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <button type="submit">Add Task</button>
+    </form>
+  
+    <div class="sort-controls">
+        <label for="sort">Sort by:</label>
+        <select id="sort" (change)="sortTasks($event)">
+          <option value="dueDate">Due Date</option>
+          <option value="priority">Priority</option>
+          <option value="status">Status</option>
+        </select>
+      </div>
+      
+  
+    <div class="task-list">
+      <div class="task-item" *ngFor="let task of tasks">
+        <h3>{{ task.title }}</h3>
+        <p>{{ task.description }}</p>
+        <p>Due: {{ task.dueDate | date }}</p>
+        <p>Priority: {{ task.priority }}</p>
+        <p>Status: {{ task.status }}</p>
+        <button (click)="editTask(task)">Edit</button>
+        <button (click)="deleteTask(task.id)">Delete</button>
+        <select [(ngModel)]="task.status" (change)="updateTaskStatus(task)">
+          <option value="To-Do">To-Do</option>
+          <option value="In-Progress">In-Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  

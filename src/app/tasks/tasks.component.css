@@ -1,0 +1,45 @@
+/* src/app/tasks/tasks.component.css */
+.task-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  input, textarea, select, button {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  .sort-controls {
+    margin-bottom: 20px;
+  }
+  
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .task-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  @media (max-width: 600px) {
+    form, .task-item {
+      flex-direction: column;
+    }
+  
+    input, textarea, select, button {
+      font-size: 0.8rem;
+    }
+  }
+  
