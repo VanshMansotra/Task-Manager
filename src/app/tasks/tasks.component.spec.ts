@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { TasksComponent } from './tasks.component';
 
 describe('TasksComponent', () => {
@@ -8,12 +7,13 @@ describe('TasksComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TasksComponent]
+      imports: [TasksComponent],
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(TasksComponent);
     component = fixture.componentInstance;
+    await fixture.whenStable(); // Wait for async tasks to complete
     fixture.detectChanges();
   });
 
@@ -21,3 +21,4 @@ describe('TasksComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+

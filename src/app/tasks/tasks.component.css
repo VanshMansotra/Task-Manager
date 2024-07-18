@@ -1,45 +1,76 @@
-/* src/app/tasks/tasks.component.css */
+/* Bootstrap-like form styling */
 .task-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  form {
-    display: flex;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+input, textarea, select, button {
+  padding: 10px;
+  font-size: 1rem;
+}
+
+input.form-control, textarea.form-control, select.form-control {
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+button.btn {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+button.btn:hover {
+  background-color: #0056b3;
+}
+
+.sort-controls {
+  margin-bottom: 20px;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.task-item {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 0.25rem;
+  background-color: #f8f9fa;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.15s ease-in-out;
+}
+
+.task-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 600px) {
+  form, .task-item {
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
   }
-  
+
   input, textarea, select, button {
-    padding: 10px;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
-  
-  .sort-controls {
-    margin-bottom: 20px;
-  }
-  
-  .task-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .task-item {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  @media (max-width: 600px) {
-    form, .task-item {
-      flex-direction: column;
-    }
-  
-    input, textarea, select, button {
-      font-size: 0.8rem;
-    }
-  }
-  
+}

@@ -9,29 +9,28 @@
         <option value="Medium">Medium</option>
         <option value="High">High</option>
       </select>
-      <button type="submit">Add Task</button>
+      <button type="submit" class="btn">Add Task</button>
     </form>
   
     <div class="sort-controls">
-        <label for="sort">Sort by:</label>
-        <select id="sort" (change)="sortTasks($event)">
-          <option value="dueDate">Due Date</option>
-          <option value="priority">Priority</option>
-          <option value="status">Status</option>
-        </select>
-      </div>
-      
+      <label for="sort">Sort by:</label>
+      <select id="sort" (change)="sortTasks($event)">
+        <option value="dueDate">Due Date</option>
+        <option value="priority">Priority</option>
+        <option value="status">Status</option>
+      </select>
+    </div>
   
     <div class="task-list">
-      <div class="task-item" *ngFor="let task of tasks">
+      <div class="task-item" *ngFor="let task of tasks$ | async">
         <h3>{{ task.title }}</h3>
         <p>{{ task.description }}</p>
-        <p>Due: {{ task.dueDate | date }}</p>
+        <p>Due: {{ task.dueDate | date:'shortDate' }}</p>
         <p>Priority: {{ task.priority }}</p>
         <p>Status: {{ task.status }}</p>
-        <button (click)="editTask(task)">Edit</button>
-        <button (click)="deleteTask(task.id)">Delete</button>
-        <select [(ngModel)]="task.status" (change)="updateTaskStatus(task)">
+        <button class="btn" (click)="editTask(task)">Edit</button>
+        <button class="btn" (click)="deleteTask(task.id)">Delete</button>
+        <select [ngModel]="task.status" (ngModelChange)="changeTaskStatus(task, $event)">
           <option value="To-Do">To-Do</option>
           <option value="In-Progress">In-Progress</option>
           <option value="Completed">Completed</option>
@@ -39,4 +38,5 @@
       </div>
     </div>
   </div>
+  
   

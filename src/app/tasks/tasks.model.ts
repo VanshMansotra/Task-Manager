@@ -5,5 +5,9 @@ export interface Task {
     dueDate: Date;
     priority: 'Low' | 'Medium' | 'High';
     status: 'To-Do' | 'In-Progress' | 'Completed';
-  }
+}
   
+export interface TaskState {
+    tasks: Task[];
+}
+
