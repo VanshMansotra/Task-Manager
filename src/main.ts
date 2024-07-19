@@ -12,7 +12,7 @@ import { StoreModule } from '@ngrx/store';
 bootstrapApplication(AppComponent, {
   providers: [
     provideStore({ tasks: taskReducer }),
-    provideEffects([]), // Include any effects here
+    provideEffects([]), 
     importProvidersFrom(RouterModule.forRoot(routes)),
     importProvidersFrom(StoreModule.forRoot({ tasks: taskReducer }))
   ]
