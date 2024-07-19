@@ -21,6 +21,8 @@
     </select>
   </div>
 
+  <button class="btn btn-info" (click)="downloadCSV()">Download as CSV</button>
+
   <div class="task-list">
     <div class="task-item" *ngFor="let task of tasks$ | async">
       <h3>{{ task.title }}</h3>
@@ -30,7 +32,7 @@
       <p>Status: {{ task.status }}</p>
       <button (click)="editTask(task)" class="btn btn-primary">Edit</button>
       <button (click)="deleteTask(task.id)" class="btn btn-danger">Delete</button>
-      <select [(ngModel)]="task.status" (change)="changeTaskStatus(task, task.status)" class="form-control">
+      <select [ngModel]="task.status" (ngModelChange)="changeTaskStatus(task, $event)" class="form-control">
         <option value="To-Do">To-Do</option>
         <option value="In-Progress">In-Progress</option>
         <option value="Completed">Completed</option>

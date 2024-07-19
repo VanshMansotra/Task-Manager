@@ -48,7 +48,9 @@ export class TasksComponent implements OnInit {
       alert('Please fill in all the details.');
       return;
     }
-  
+    if (typeof this.newTask.dueDate === 'string') {
+      this.newTask.dueDate = new Date(this.newTask.dueDate);
+    }
     if (this.isEditing) {
       this.store.dispatch(TaskActions.editTask({ id: this.newTask.id, task: this.newTask }));
     } else {
@@ -78,11 +80,24 @@ export class TasksComponent implements OnInit {
     this.store.dispatch(TaskActions.updateTaskStatus({ id: task.id, status: task.status }));
     this.saveTasksToLocalStorage();
   }
-
   changeTaskStatus(task: Task, status: 'To-Do' | 'In-Progress' | 'Completed') {
-    this.store.dispatch(TaskActions.updateTaskStatus({ id: task.id, status }));
+    // Create a new task object with the updated status
+    const updatedTask = { ...task, status };
+    
+    // Dispatch the action with the updated task
+    this.store.dispatch(TaskActions.updateTaskStatus({ id: task.id, status: updatedTask.status }));
+    
+    // Save the updated tasks to local storage
     this.saveTasksToLocalStorage();
   }
+  
+
+  // changeTaskStatus(task: Task, status: 'To-Do' | 'In-Progress' | 'Completed') {
+  //   const updatedTask = { ...task, status };
+  //   this.store.dispatch(TaskActions.updateTaskStatus({ id: task.id, status: updatedTask.status }));
+  //   this.saveTasksToLocalStorage();
+  // }
+  
 
   sortTasks(event: Event) {
     const criteria = (event.target as HTMLSelectElement).value;
@@ -107,8 +122,12 @@ export class TasksComponent implements OnInit {
     });
   }
 
-  getFormattedDate(date: Date): string {
-    return date.toISOString().substring(0, 10);
+  getFormattedDate(date: any): string {
+    if (date instanceof Date) {
+      return date.toISOString().substring(0, 10);
+    } else {
+      return new Date(date).toISOString().substring(0, 10);
+    }
   }
 
   private resetForm() {
@@ -119,5 +138,41 @@ export class TasksComponent implements OnInit {
     this.tasks$.pipe(take(1)).subscribe(tasks => {
       this.taskService.saveTasks(tasks);
     });
+  }
+  downloadCSV() {
+    this.tasks$.pipe(take(1)).subscribe(tasks => {
+      const csvData = this.convertToCSV(tasks);
+      const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.setAttribute('href', url);
+      downloadLink.setAttribute('download', 'tasks.csv');
+      downloadLink.style.visibility = 'hidden';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
+  }
+  private convertToCSV(tasks: Task[]): string {
+    const header = ['ID', 'Title', 'Description', 'Due Date', 'Priority', 'Status'];
+    const rows = tasks.map(task => [
+      task.id,
+      task.title,
+      task.description,
+      this.formatDate(task.dueDate), // Use a helper function to format the date
+      task.priority,
+      task.status
+    ]);
+  
+    const csvContent = [header, ...rows].map(e => e.join(',')).join('\n');
+    return csvContent;
+  }
+  
+  private formatDate(date: any): string {
+    if (date instanceof Date) {
+      return date.toISOString().substring(0, 10);
+    } else {
+      return new Date(date).toISOString().substring(0, 10);
+    }
   }
 }
